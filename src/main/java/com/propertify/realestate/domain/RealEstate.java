@@ -1,7 +1,7 @@
-package com.propertify.property.domain;
+package com.propertify.realestate.domain;
 
 
-import com.propertify.property.dto.PropertyDto;
+import com.propertify.realestate.dto.RealEstateDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-class Property {
+class RealEstate {
 
     private Long id;
     private String title;
@@ -20,8 +20,8 @@ class Property {
     private String url;
 
 
-    PropertyDto toDto(){
-        return PropertyDto.builder()
+    RealEstateDto toDto(){
+        return RealEstateDto.builder()
                 .title(title)
                 .city(city)
                 .metricArea(metricArea)
