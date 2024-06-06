@@ -13,7 +13,7 @@ public interface RealEstateValuesValidator {
     }
 
     static String validateCityName(String cityName) {
-        return cityName == null || cityName.isEmpty() ? "" : cityName;
+        return cityName == null ? "" : cityName;
     }
 
     static void validateRangeParameters(Integer startValue, Integer endValue) {
