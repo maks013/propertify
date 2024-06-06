@@ -2,7 +2,7 @@ package com.propertify.realestate.domain;
 
 import com.propertify.realestate.exception.InvalidParameterRangeException;
 
-interface RealEstateValuesValidator {
+public interface RealEstateValuesValidator {
 
     static int validateStartValue(Integer startValue){
         return (startValue == null) ? 0 : startValue;
