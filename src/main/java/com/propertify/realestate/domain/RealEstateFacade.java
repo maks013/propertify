@@ -57,7 +57,7 @@ public class RealEstateFacade {
         Integer endMetricArea = validateEndValue(searchRequest.metricAreaEnd());
         validateRangeParameters(startMetricArea, endMetricArea);
 
-        String cityName = searchRequest.city();
+        String cityName = validateCityName(searchRequest.city());
 
         return realEstateRepository.findAllByAllParams(
                         startPrice, endPrice, startMetricArea,
