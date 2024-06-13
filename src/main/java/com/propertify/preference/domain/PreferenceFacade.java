@@ -5,6 +5,8 @@ import com.propertify.preference.dto.PreferenceRequestDto;
 import com.propertify.preference.exception.PreferencesNotFoundException;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 public class PreferenceFacade {
 
@@ -12,14 +14,21 @@ public class PreferenceFacade {
     private final RangeMapper rangeMapper;
     private final PreferenceUpdater preferenceUpdater;
 
-    PreferenceDto getPreferencesByUserId(Long userId) {
+    public List<PreferenceDto> getAllPreferences() {
+        return preferenceRepository.findAll()
+                .stream()
+                .map(Preference::toDto)
+                .toList();
+    }
+
+    public PreferenceDto getPreferencesByUserId(Long userId) {
         return preferenceRepository
                 .findByUserId(userId)
                 .orElseThrow(() -> new PreferencesNotFoundException(userId))
                 .toDto();
     }
 
-    PreferenceDto addNewPreferences(PreferenceRequestDto preferenceRequestDto) {
+    public PreferenceDto addNewPreferences(PreferenceRequestDto preferenceRequestDto) {
 
         final Preference newPreference = Preference.builder()
                 .priceRange(rangeMapper.priceRangeFromDto(
@@ -33,7 +42,7 @@ public class PreferenceFacade {
         return preferenceRepository.save(newPreference).toDto();
     }
 
-    PreferenceDto updatePreferences(PreferenceRequestDto preferenceRequestDto) {
+    public PreferenceDto updatePreferences(PreferenceRequestDto preferenceRequestDto) {
 
         final Preference preferenceToUpdate = preferenceRepository
                 .findByUserId(preferenceRequestDto.userId())
@@ -43,5 +52,4 @@ public class PreferenceFacade {
 
         return preferenceRepository.save(preferenceToUpdate).toDto();
     }
-
 }

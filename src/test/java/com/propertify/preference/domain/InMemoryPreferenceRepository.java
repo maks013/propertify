@@ -1,5 +1,6 @@
 package com.propertify.preference.domain;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -24,11 +25,13 @@ class InMemoryPreferenceRepository implements PreferenceRepository {
                 .findFirst();
     }
 
+    @Override
+    public List<Preference> findAll() {
+        return inMemoryRepo.values().stream().toList();
+    }
+
     void addPreferences(Preference preference) {
         inMemoryRepo.put(preference.getId(), preference);
     }
 
-    int getSize() {
-        return inMemoryRepo.size();
-    }
 }
