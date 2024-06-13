@@ -21,6 +21,7 @@ class Preference {
                 .priceRange(priceRange.toDto())
                 .metricAreaRange(metricAreaRange.toDto())
                 .cityName(cityName)
+                .userId(userId)
                 .build();
     }
 }

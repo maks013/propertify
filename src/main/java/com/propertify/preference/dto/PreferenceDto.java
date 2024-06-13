@@ -5,6 +5,7 @@ import lombok.Builder;
 @Builder
 public record PreferenceDto(PriceRangeDto priceRange,
                             MetricAreaRangeDto metricAreaRange,
-                            String cityName
+                            String cityName,
+                            Long userId
 ) {
 }
