@@ -11,12 +11,17 @@ interface RealEstateRepository {
 
     List<RealEstate> findAllByCity(String city);
 
-    List<RealEstate> findAllInPriceRange(Integer startPrice, Integer endPrice);
+    List<RealEstate> findAllInPriceRange(Integer startPrice,
+                                         Integer endPrice);
 
-    List<RealEstate> findAllInPriceBySquareMeterRange(Integer startPrice, Integer endPrice);
+    List<RealEstate> findAllInPriceBySquareMeterRange(Integer startPrice,
+                                                      Integer endPrice);
 
-    List<RealEstate> findAllInMetricAreaRange(Integer startMetricArea, Integer endMetricArea);
+    List<RealEstate> findAllInMetricAreaRange(Integer startMetricArea,
+                                              Integer endMetricArea);
 
-    List<RealEstate> findAllByAllParams(Integer startPrice, Integer endPrice, Integer startMetricArea, Integer endMetricArea, String cityName);
+    List<RealEstate> findAllByAllParams(Integer startPrice, Integer endPrice,
+                                        Integer startMetricArea, Integer endMetricArea,
+                                        String cityName);
 
 }

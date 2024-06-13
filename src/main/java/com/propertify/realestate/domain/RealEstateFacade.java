@@ -1,7 +1,9 @@
 package com.propertify.realestate.domain;
 
+import com.propertify.preference.dto.MetricAreaRangeDto;
+import com.propertify.preference.dto.PreferenceDto;
+import com.propertify.preference.dto.PriceRangeDto;
 import com.propertify.realestate.dto.RealEstateDto;
-import com.propertify.realestate.dto.SearchRequest;
 import com.propertify.realestate.exception.RealEstateNotFoundException;
 import lombok.RequiredArgsConstructor;
 
@@ -35,29 +37,29 @@ public class RealEstateFacade {
                 .toList();
     }
 
-    public List<RealEstateDto> getAllRealEstatesInPriceRange(Integer startPrice, Integer endPrice) {
-        return findRealEstatesInRange(startPrice, endPrice, realEstateRepository::findAllInPriceRange);
+    public List<RealEstateDto> getAllRealEstatesInPriceRange(PriceRangeDto priceRangeDto) {
+        return findRealEstatesInRange(priceRangeDto.startPrice(), priceRangeDto.endPrice(), realEstateRepository::findAllInPriceRange);
     }
 
-    public List<RealEstateDto> getAllRealEstatesInPriceBySquareMeterRange(Integer startPrice, Integer endPrice) {
-        return findRealEstatesInRange(startPrice, endPrice, realEstateRepository::findAllInPriceBySquareMeterRange);
+    public List<RealEstateDto> getAllRealEstatesInPriceBySquareMeterRange(PriceRangeDto priceRangeDto) {
+        return findRealEstatesInRange(priceRangeDto.startPrice(), priceRangeDto.endPrice(), realEstateRepository::findAllInPriceBySquareMeterRange);
     }
 
-    public List<RealEstateDto> getAllRealEstatesInMetricAreaRange(Integer startMetricArea, Integer endMetricArea) {
-        return findRealEstatesInRange(startMetricArea, endMetricArea, realEstateRepository::findAllInMetricAreaRange);
+    public List<RealEstateDto> getAllRealEstatesInMetricAreaRange(MetricAreaRangeDto metricAreaRangeDto) {
+        return findRealEstatesInRange(metricAreaRangeDto.startMetricArea(), metricAreaRangeDto.endMetricArea(), realEstateRepository::findAllInMetricAreaRange);
     }
 
-    public List<RealEstateDto> getAllRealEstatesByAllParams(SearchRequest searchRequest) {
+    public List<RealEstateDto> getAllRealEstatesByAllParams(PreferenceDto preferenceDto) {
 
-        Integer startPrice = validateStartValue(searchRequest.totalPriceStart());
-        Integer endPrice = validateEndValue(searchRequest.totalPriceEnd());
+        Integer startPrice = validateStartValue(preferenceDto.priceRange().startPrice());
+        Integer endPrice = validateEndValue(preferenceDto.priceRange().endPrice());
         validateRangeParameters(startPrice, endPrice);
 
-        Integer startMetricArea = validateStartValue(searchRequest.metricAreaStart());
-        Integer endMetricArea = validateEndValue(searchRequest.metricAreaEnd());
+        Integer startMetricArea = validateStartValue(preferenceDto.metricAreaRange().startMetricArea());
+        Integer endMetricArea = validateEndValue(preferenceDto.metricAreaRange().endMetricArea());
         validateRangeParameters(startMetricArea, endMetricArea);
 
-        String cityName = validateCityName(searchRequest.city());
+        String cityName = validateCityName(preferenceDto.cityName());
 
         return realEstateRepository.findAllByAllParams(
                         startPrice, endPrice, startMetricArea,
