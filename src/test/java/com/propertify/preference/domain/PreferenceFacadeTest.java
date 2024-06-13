@@ -37,6 +37,17 @@ class PreferenceFacadeTest {
     }
 
     @Test
+    void should_get_all_preferences() {
+
+        // given
+        final int sizeOfAll = preferenceFacade.getAllPreferences().size();
+
+        // when
+        // then
+        assertEquals(2, sizeOfAll);
+    }
+
+    @Test
     void should_add_new_preference() {
 
         // given
@@ -45,9 +56,9 @@ class PreferenceFacadeTest {
                 new MetricAreaRangeDto(100, 200), "");
 
         // when
-        int sizeBefore = inMemoryPreferenceRepository.getSize();
+        int sizeBefore = preferenceFacade.getAllPreferences().size();
         preferenceFacade.addNewPreferences(preferenceRequestDto);
-        int sizeAfter = inMemoryPreferenceRepository.getSize();
+        int sizeAfter = preferenceFacade.getAllPreferences().size();
 
         // then
         assertEquals(1, sizeAfter - sizeBefore);
