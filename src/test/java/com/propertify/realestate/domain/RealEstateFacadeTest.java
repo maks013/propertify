@@ -1,7 +1,9 @@
 package com.propertify.realestate.domain;
 
+import com.propertify.preference.dto.MetricAreaRangeDto;
+import com.propertify.preference.dto.PreferenceDto;
+import com.propertify.preference.dto.PriceRangeDto;
 import com.propertify.realestate.dto.RealEstateDto;
-import com.propertify.realestate.dto.SearchRequest;
 import com.propertify.realestate.exception.InvalidParameterRangeException;
 import com.propertify.realestate.exception.RealEstateNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -85,11 +87,12 @@ class RealEstateFacadeTest {
         // given
         final int startPrice = 250000;
         final int endPrice = 150000;
+        PriceRangeDto priceRangeDto = new PriceRangeDto(startPrice, endPrice);
 
         // when
         // then
         assertThrows(InvalidParameterRangeException.class,
-                () -> realEstateFacade.getAllRealEstatesInPriceRange(startPrice, endPrice));
+                () -> realEstateFacade.getAllRealEstatesInPriceRange(priceRangeDto));
     }
 
     @Test
@@ -98,9 +101,11 @@ class RealEstateFacadeTest {
         // given
         final int startPrice = realEstate2.getPrice().intValue();
         final int endPrice = realEstate3.getPrice().intValue();
+        PriceRangeDto priceRangeDto = new PriceRangeDto(startPrice, endPrice);
 
         // when
-        int sizeOfListWithRealEstates = realEstateFacade.getAllRealEstatesInPriceRange(startPrice, endPrice).size();
+        int sizeOfListWithRealEstates = realEstateFacade
+                .getAllRealEstatesInPriceRange(priceRangeDto).size();
 
         // then
         assertEquals(2, sizeOfListWithRealEstates);
@@ -112,10 +117,11 @@ class RealEstateFacadeTest {
         // given
         final int startPrice = realEstate2.getPricePerSquareMeter().intValue();
         final int endPrice = realEstate3.getPricePerSquareMeter().intValue();
+        PriceRangeDto priceRangeDto = new PriceRangeDto(startPrice, endPrice);
 
         // when
         int sizeOfListWithRealEstates = realEstateFacade
-                .getAllRealEstatesInPriceBySquareMeterRange(startPrice, endPrice).size();
+                .getAllRealEstatesInPriceBySquareMeterRange(priceRangeDto).size();
 
         // then
         assertEquals(2, sizeOfListWithRealEstates);
@@ -127,10 +133,11 @@ class RealEstateFacadeTest {
         // given
         final int startValue = 50;
         final int endValue = 130;
+        MetricAreaRangeDto metricAreaRangeDto = new MetricAreaRangeDto(startValue, endValue);
 
         // when
         int sizeOfListWithRealEstates = realEstateFacade
-                .getAllRealEstatesInMetricAreaRange(startValue, endValue).size();
+                .getAllRealEstatesInMetricAreaRange(metricAreaRangeDto).size();
 
         // then
         assertEquals(2, sizeOfListWithRealEstates);
@@ -140,12 +147,16 @@ class RealEstateFacadeTest {
     void should_find_all_real_estates_by_search_request_with_all_params() {
 
         // given
-        final SearchRequest searchRequest = new SearchRequest("CityA",
-                200000, 1500000, 40, 130);
+        final PreferenceDto preferenceDto = PreferenceDto.builder()
+                .priceRange(new PriceRangeDto(200000, 1500000))
+                .metricAreaRange(new MetricAreaRangeDto(40, 130))
+                .cityName("CityA")
+                .userId(1L)
+                .build();
 
         // when
         int sizeOfListWithRealEstates = realEstateFacade
-                .getAllRealEstatesByAllParams(searchRequest).size();
+                .getAllRealEstatesByAllParams(preferenceDto).size();
 
         // then
         assertEquals(2, sizeOfListWithRealEstates);
@@ -155,12 +166,16 @@ class RealEstateFacadeTest {
     void should_find_all_real_estates_by_search_request_without_all_params() {
 
         // given
-        final SearchRequest searchRequest = new SearchRequest("CityB",
-                null, null, null, null);
+        final PreferenceDto preferenceDto = PreferenceDto.builder()
+                .priceRange(new PriceRangeDto(null, null))
+                .metricAreaRange(new MetricAreaRangeDto(null, null))
+                .cityName("CityB")
+                .userId(1L)
+                .build();
 
         // when
         int sizeOfListWithRealEstates = realEstateFacade
-                .getAllRealEstatesByAllParams(searchRequest).size();
+                .getAllRealEstatesByAllParams(preferenceDto).size();
 
         // then
         assertEquals(1, sizeOfListWithRealEstates);
