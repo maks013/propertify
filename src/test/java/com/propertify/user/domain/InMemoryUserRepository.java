@@ -41,4 +41,8 @@ class InMemoryUserRepository implements UserRepository {
         User user = inMemoryRepo.get(userId);
         user.enableUser();
     }
+
+    public void addUser(User user) {
+        inMemoryRepo.put(user.getId(), user);
+    }
 }
