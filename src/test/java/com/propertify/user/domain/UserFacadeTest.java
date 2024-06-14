@@ -9,11 +9,21 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserFacadeTest {
+public class UserFacadeTest {
 
-    private UserRepository inMemRepo = new InMemoryUserRepository();
+    private InMemoryUserRepository inMemRepo = new InMemoryUserRepository();
 
-    private final UserFacade userFacade = new UserFacade(inMemRepo, new UserDataValidator(inMemRepo));
+    public UserFacade userFacade = new UserFacade(inMemRepo, new UserDataValidator(inMemRepo));
+
+    private final User USER1 = new User(1L, "email1@example.com",
+            "password1", true);
+    private final User USER2 = new User(2L, "email2@example.com",
+            "password2", true);
+
+    public void setUp() {
+        inMemRepo.addUser(USER1);
+        inMemRepo.addUser(USER2);
+    }
 
     @Test
     void should_throw_exception_when_user_try_to_register_with_invalid_email_format() {
