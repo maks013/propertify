@@ -17,15 +17,15 @@ class RealEstateFacadeTest {
 
     private final RealEstateFacade realEstateFacade = new RealEstateFacade(realEstateRepository);
 
-    private final RealEstate realEstate1 = new RealEstate(1L, "Number 1", "CityA", 124.0, 1350000.0, 10887.1, "https://example.com/offer1");
-    private final RealEstate realEstate2 = new RealEstate(2L, "Number 2", "CityA", 48.0, 300000.0, 6250.0, "https://example.com/offer2");
-    private final RealEstate realEstate3 = new RealEstate(3L, "Number 3", "CityB", 64.0, 480000.0, 7500.0, "https://example.com/offer3");
+    private final RealEstate REAL_ESTATE_1 = new RealEstate(1L, "Number 1", "CityA", 124.0, 1350000.0, 10887.1, "https://example.com/offer1");
+    private final RealEstate REAL_ESTATE_2 = new RealEstate(2L, "Number 2", "CityA", 48.0, 300000.0, 6250.0, "https://example.com/offer2");
+    private final RealEstate REAL_ESTATE_3 = new RealEstate(3L, "Number 3", "CityB", 64.0, 480000.0, 7500.0, "https://example.com/offer3");
 
     @BeforeEach
     void setUp() {
-        realEstateRepository.addRealEstate(realEstate1);
-        realEstateRepository.addRealEstate(realEstate2);
-        realEstateRepository.addRealEstate(realEstate3);
+        realEstateRepository.addRealEstate(REAL_ESTATE_1);
+        realEstateRepository.addRealEstate(REAL_ESTATE_2);
+        realEstateRepository.addRealEstate(REAL_ESTATE_3);
     }
 
     @Test
@@ -54,17 +54,17 @@ class RealEstateFacadeTest {
     void should_find_real_estate_by_id() {
 
         // given
-        final long realEstateId = realEstate1.getId();
+        final long realEstateId = REAL_ESTATE_1.getId();
 
         // when
         RealEstateDto realEstate = realEstateFacade.getRealEstateById(realEstateId);
 
         // then
         assertAll(
-                () -> assertEquals(realEstate1.getTitle(), realEstate.title()),
-                () -> assertEquals(realEstate1.getCity(), realEstate.city()),
-                () -> assertEquals(realEstate1.getPrice(), realEstate.price()),
-                () -> assertEquals(realEstate1.getUrl(), realEstate.url())
+                () -> assertEquals(REAL_ESTATE_1.getTitle(), realEstate.title()),
+                () -> assertEquals(REAL_ESTATE_1.getCity(), realEstate.city()),
+                () -> assertEquals(REAL_ESTATE_1.getPrice(), realEstate.price()),
+                () -> assertEquals(REAL_ESTATE_1.getUrl(), realEstate.url())
         );
     }
 
@@ -99,8 +99,8 @@ class RealEstateFacadeTest {
     void should_find_all_real_estates_in_price_range() {
 
         // given
-        final int startPrice = realEstate2.getPrice().intValue();
-        final int endPrice = realEstate3.getPrice().intValue();
+        final int startPrice = REAL_ESTATE_2.getPrice().intValue();
+        final int endPrice = REAL_ESTATE_3.getPrice().intValue();
         PriceRangeDto priceRangeDto = new PriceRangeDto(startPrice, endPrice);
 
         // when
@@ -115,8 +115,8 @@ class RealEstateFacadeTest {
     void should_find_all_real_estates_in_price_by_square_range() {
 
         // given
-        final int startPrice = realEstate2.getPricePerSquareMeter().intValue();
-        final int endPrice = realEstate3.getPricePerSquareMeter().intValue();
+        final int startPrice = REAL_ESTATE_2.getPricePerSquareMeter().intValue();
+        final int endPrice = REAL_ESTATE_3.getPricePerSquareMeter().intValue();
         PriceRangeDto priceRangeDto = new PriceRangeDto(startPrice, endPrice);
 
         // when
