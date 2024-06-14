@@ -22,18 +22,18 @@ class PreferenceFacadeTest {
             new PreferenceUpdater(rangeMapper)
     );
 
-    private final Preference preference1 = new Preference(
+    private final Preference PREFERENCE_1 = new Preference(
             1L, new PriceRange(250000, 500000), new MetricAreaRange(60, 100), "Kraków", 1L
     );
 
-    private final Preference preference2 = new Preference(
+    private final Preference PREFERENCE_2 = new Preference(
             2L, new PriceRange(250000, 500000), new MetricAreaRange(60, 100), "Kraków", 2L
     );
 
     @BeforeEach
     void setUp() {
-        inMemoryPreferenceRepository.addPreferences(preference1);
-        inMemoryPreferenceRepository.addPreferences(preference2);
+        inMemoryPreferenceRepository.addPreferences(PREFERENCE_1);
+        inMemoryPreferenceRepository.addPreferences(PREFERENCE_2);
     }
 
     @Test
